@@ -15,7 +15,7 @@ namespace Game
 {
 	const Engine::Math::Vector2D null(0.f, 0.f);
 
-	class AsteroidsGame 
+	class AsteroidsGame
 	{
 	public:
 
@@ -41,11 +41,12 @@ namespace Game
 		/*======================================*/
 		int								m_WIDTH;
 		int								m_HEIGHT;
+		int lifes;
 
 		/*======================================*/
 		/*			PRIVATE FUNCTIONS			*/
 		/*======================================*/
-		void checkCollitions();
+		void checkCollitions(int life);
 		void deleteEnemy(Asteroids::Entity::Asteroid*);
 		void createDebris(Asteroids::Entity::Asteroid::AsteroidSize size, Engine::Math::Vector2D pos);
 		void createEnemy(int, Asteroids::Entity::Asteroid::AsteroidSize, Engine::Math::Vector2D);

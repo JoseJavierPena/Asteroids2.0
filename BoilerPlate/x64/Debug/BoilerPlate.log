@@ -1,8 +1,13 @@
-﻿  Ship.cpp
-  BoilerPlate.vcxproj -> C:\Users\20146061\Source\Repos\Asteroids2.0\x64\Debug\BoilerPlate.exe
+﻿cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+  App.cpp
+  Game.cpp
+  main.cpp
+  Generating Code...
+  BoilerPlate.vcxproj -> C:\Users\Invitado\Source\Repos\Asteroids2.0\x64\Debug\BoilerPlate.exe
+  BoilerPlate.vcxproj -> C:\Users\Invitado\Source\Repos\Asteroids2.0\x64\Debug\BoilerPlate.pdb (Full PDB)
           1 file(s) copied.
           1 file(s) copied.
-  C:\Users\20146061\Source\Repos\Asteroids2.0\\BoilerPlate\models\enterprise.points
-  C:\Users\20146061\Source\Repos\Asteroids2.0\\BoilerPlate\models\falcon.points
-  C:\Users\20146061\Source\Repos\Asteroids2.0\\BoilerPlate\models\ship.points
+  C:\Users\Invitado\Source\Repos\Asteroids2.0\\BoilerPlate\models\enterprise.points
+  C:\Users\Invitado\Source\Repos\Asteroids2.0\\BoilerPlate\models\falcon.points
+  C:\Users\Invitado\Source\Repos\Asteroids2.0\\BoilerPlate\models\ship.points
           3 file(s) copied.

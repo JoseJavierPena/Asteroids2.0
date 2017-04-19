@@ -339,7 +339,7 @@ namespace Engine
 	}
 
 	void App::CheckLives()
-	{
+	{	
 		if (lifes == 0)
 		{
 			std::cout << "GAME OVER!" << std::endl;

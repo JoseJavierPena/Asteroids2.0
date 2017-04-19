@@ -41,7 +41,7 @@ namespace Game
 			m_enemies.at(i)->Update(fps);
 
 		//Check collitions
-		checkCollitions();
+		checkCollitions(lifes);
 
 		return;
 	}
@@ -58,11 +58,11 @@ namespace Game
 		return;
 	}
 
-	void AsteroidsGame::checkCollitions()
+	void AsteroidsGame::checkCollitions(int life)
 	{
 		if (!m_player[m_playerIndex]->canCollide()) return;
 
-		int i = 0;
+		bool colliding = false;
 		bool bulletHit = false;
 		for (auto temp : m_enemies)
 		{
@@ -71,6 +71,12 @@ namespace Game
 			{
 				if (m_player[m_playerIndex]->isColliding(pAsteroid))
 				{
+					//Lifes
+					colliding = true;
+					life = lifes;
+					lifes--;
+					
+
 					//Getting size for debris
 					Asteroids::Entity::Asteroid::AsteroidSize currentSize = pAsteroid->getSize();
 
