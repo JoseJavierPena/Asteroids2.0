@@ -9,7 +9,7 @@
 //
 #include <algorithm>
 
-//
+//Physics includes
 #include "Physics.h"
 
 
@@ -17,6 +17,13 @@ namespace Asteroids
 {
 	namespace Entity
 	{
+		const float ROTATION_SPEED = 5.0f;
+
+		Ship::Ship()
+			: m_velocity()
+			, m_usedBullets(0)
+		{};
+
 		Ship::Ship(std::vector<Engine::Math::Vector2D> model_points)
 			: m_velocity()
 			, m_usedBullets(0)
@@ -27,7 +34,7 @@ namespace Asteroids
 			m_angleInRads = 0.f;
 			Mass();
 			m_respawnTime = 0;
-			//m_currentColor = Engine::Math::Vector3D(1.f);
+			m_currentColor = Engine::Math::Vector3D(1.f);
 			m_currentSpeed = 0.f;
 		};
 
@@ -40,7 +47,7 @@ namespace Asteroids
 				{
 					setCollision(true);
 					m_respawnTime = 0;
-					//m_currentColor = Engine::Math::Vector3D(0.f);
+					m_currentColor = Engine::Math::Vector3D(0.f);
 				}
 				m_respawnTime++;
 			}
@@ -58,7 +65,7 @@ namespace Asteroids
 			glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
 
 			//Color changing
-			//glColor3f(m_currentColor.m_x, m_currentColor.m_y, m_currentColor.m_z);
+			glColor3f(m_currentColor.m_x, m_currentColor.m_y, m_currentColor.m_z);
 
 			// Ship drawing
 			glBegin(GL_LINE_LOOP);
@@ -92,12 +99,12 @@ namespace Asteroids
 
 		void Ship::MoveRight()
 		{
-			rotate(-10.0f);
+			rotate((-5.0f) - ROTATION_SPEED);
 		}
 
 		void Ship::MoveLeft()
 		{
-			rotate(10.0f);
+			rotate((5.0f) + ROTATION_SPEED);
 		}
 
 		void Ship::Shoot()
@@ -167,7 +174,7 @@ namespace Asteroids
 			setCollision(false);
 			m_position = Engine::Math::Vector2D(0.f);
 			ResetOrientation();
-			//m_currentColor = Engine::Math::Vector3D(1.f, 0.f, 0.f);
+			m_currentColor = Engine::Math::Vector3D(1.f, 0.f, 0.f);
 			setVelocity(Engine::Math::Vector2D(0.f, 0.f));
 		};
 
@@ -223,5 +230,49 @@ namespace Asteroids
 			m_angle = 0.f;
 			m_angleInRads = 0.f;
 		};
+
+		void Ship::Lifes(int lifes, int index)
+		{
+			int sum;
+			if (index != 2)
+			{
+				sum = 380;
+				
+				for (int i = 0; i < lifes; i++)
+				{
+					//Reset matrix
+					glLoadIdentity();
+
+					//Drawing the ship
+					glBegin(GL_LINE_LOOP);
+					for (auto temp : m_points)
+					{
+						glVertex2f(temp.m_x + sum, temp.m_y + 275);
+					}
+					glEnd();
+					sum += 70;
+				}
+			}
+			else
+			{
+				sum = 400;
+
+				for (int i = 0; i < lifes; i++)
+				{
+					//Reset matrix
+					glLoadIdentity();
+
+					//Drawing the ship
+					glBegin(GL_LINE_LOOP);
+
+					for (auto temp : m_points)
+					{
+						glVertex2f(temp.m_x + sum, temp.m_y + 295);
+					}
+					glEnd();
+					sum += 50;
+				}
+			}
+		}
 	}
 }

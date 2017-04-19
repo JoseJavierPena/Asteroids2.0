@@ -22,6 +22,7 @@ namespace Engine
 		, m_nUpdates(0)
 		, m_timer(new TimeManager)
 		, m_mainWindow(nullptr)
+		, lifes(3)
 	{
 		m_game = new Game::AsteroidsGame(width, height);
 		m_state = GameState::UNINITIALIZED;
@@ -87,6 +88,17 @@ namespace Engine
 		//Prints
 		std::cout << "Frame Rate: " << DESIRED_FRAME_RATE << " FPS" << std::endl;
 
+		//Adding lifes - TODO
+		Asteroids::Utilities::Load config;
+		ship = config.LoadModels();
+		lifesShip = config.LoadModels();
+
+		for (int i = 0; i < lifes; i++)
+		{
+			Asteroids::Entity::Asteroid* newAst = new Asteroids::Entity::Asteroid();
+			ast.push_back(newAst);
+		}
+
 		return true;
 	}
 
@@ -96,6 +108,7 @@ namespace Engine
 		{
 		case SDL_SCANCODE_W:
 			m_game->m_player[m_game->m_playerIndex]->MoveForward();
+			
 			break;
 		case SDL_SCANCODE_A:
 			m_game->m_player[m_game->m_playerIndex]->MoveLeft();
@@ -107,10 +120,13 @@ namespace Engine
 			m_game->m_player[m_game->m_playerIndex]->MoveRight();
 			break;
 		case SDL_SCANCODE_UP:
+			m_game->m_player[m_game->m_playerIndex]->MoveForward();
 			break;
 		case SDL_SCANCODE_LEFT:
+			m_game->m_player[m_game->m_playerIndex]->MoveLeft();
 			break;
 		case SDL_SCANCODE_RIGHT:
+			m_game->m_player[m_game->m_playerIndex]->MoveRight();
 			break;
 		case SDL_SCANCODE_DOWN:
 			break;
@@ -119,6 +135,10 @@ namespace Engine
 			break;
 		case SDL_SCANCODE_P:
 			//Do nothing
+			break;
+		//case SDL_SCANCODE_J:
+		//	//Pausing the game or ending the game
+		//	system("PAUSE");
 			break;
 		default:
 			SDL_Log("Not binded key.", keyBoardEvent.keysym.scancode);
@@ -166,8 +186,21 @@ namespace Engine
 		//
 		m_game->Update(DESIRED_FRAME_RATE);
 
+		//Update of asteroids
+		for (int i = 0; i < ast.size(); i++)
+		{
+			ast.at(i)->Update(DESIRED_FRAME_RATE);
+		}
+
+		//Checking lives and game over function
+		CheckLives();
+
+		//Checking asteroids - Not working yet
+		//CheckAst();
+		
 		double endTime = m_timer->GetElapsedTimeInSeconds();
 		double nextTimeFrame = startTime + DESIRED_FRAME_TIME;
+
 		while (endTime < nextTimeFrame)
 		{
 			// Spin lock
@@ -185,8 +218,13 @@ namespace Engine
 	{
 		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		
+		//Drawing the ship
 		m_game->Render();
+
+		//Drawing the lifes of the ship
+		lifesShip[0]->Lifes(lifes, 0);
+
 		SDL_GL_SwapWindow(m_mainWindow);
 	}
 	
@@ -299,4 +337,29 @@ namespace Engine
 		//
 		CleanupSDL();
 	}
+
+	void App::CheckLives()
+	{
+		if (lifes == 0)
+		{
+			std::cout << "GAME OVER!" << std::endl;
+			//std::cout << "Score: " << score << std::endl;
+			std::system("PAUSE");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	/*void App::CheckAst()
+	{
+		if (ast.size() == 0)
+		{
+			cantAsteroids += 2;
+
+			for (int i = 0; i < cantAsteroids; i++)
+			{
+				Asteroids::Entity::Asteroid* newAst = new Asteroids::Entity::Asteroid();
+				ast.push_back(newAst);
+			}
+		}
+	}*/
 }

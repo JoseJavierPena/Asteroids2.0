@@ -30,7 +30,7 @@ namespace Asteroids
 			if (m_size == AsteroidSize::SMALL)
 				m_radius = 10.f;
 
-			//m_currentColor = Engine::Math::Vector3D(1.f);
+			m_currentColor = Engine::Math::Vector3D(1.f);
 		}
 
 		Asteroid::Asteroid(AsteroidSize size, Engine::Math::Vector2D pos) 
@@ -48,7 +48,7 @@ namespace Asteroids
 
 			if (m_size == AsteroidSize::SMALL) { m_radius = 10.f; m_mass = 0.4f; };
 
-			//m_currentColor = Engine::Math::Vector3D(1.f);
+			m_currentColor = Engine::Math::Vector3D(1.f);
 		};
 
 		void Asteroid::Render() 
@@ -64,7 +64,7 @@ namespace Asteroids
 			glTranslatef(m_position.m_x, m_position.m_y, 0.0f);
 
 			// Color changing
-			//glColor3f(m_currentColor.m_x, m_currentColor.m_y, m_currentColor.m_z);
+			glColor3f(m_currentColor.m_x, m_currentColor.m_y, m_currentColor.m_z);
 
 			// Rendering
 			glBegin(GL_LINE_LOOP);

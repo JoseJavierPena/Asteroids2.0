@@ -37,7 +37,7 @@ namespace Asteroids
 		float m_angle;
 		float m_angleInRads;
 		Engine::Math::Vector2D m_position;
-		//Engine::Math::Vector3D m_currentColor;
+		Engine::Math::Vector3D m_currentColor;
 	};
 }
 

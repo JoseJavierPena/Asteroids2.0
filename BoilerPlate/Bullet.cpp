@@ -14,7 +14,7 @@ namespace Asteroids
 			m_angle = angle;
 			m_angleInRads = (m_angle + Asteroids::angle_offset) * (Engine::Math::PI / 180);
 			m_position = pos;
-			//m_currentColor = Engine::Math::Vector3D(0.f, 1.f, 0.f);
+			m_currentColor = Engine::Math::Vector3D(0.f, 1.f, 0.f);
 			m_lifeTime = 0;
 		};
 		
@@ -32,7 +32,7 @@ namespace Asteroids
 			glTranslatef(m_position.m_x, m_position.m_y, 0.f);
 
 			//Change color
-			//glColor3f(m_currentColor.m_x, m_currentColor.m_y, m_currentColor.m_z);
+			glColor3f(m_currentColor.m_x, m_currentColor.m_y, m_currentColor.m_z);
 
 			//Draw Bullet
 			glLoadIdentity();

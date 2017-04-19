@@ -25,6 +25,7 @@ namespace Asteroids
 			/*======================================*/
 			/*			PUBLIC FUNCTIONS			*/
 			/*======================================*/
+			Ship();
 			Ship(std::vector<Engine::Math::Vector2D> model_points);
 			void Render() override;
 			void MoveForward();
@@ -38,6 +39,9 @@ namespace Asteroids
 			void setVelocity(Engine::Math::Vector2D v) { m_velocity = v; };
 			Engine::Math::Vector2D getPosition() const { return m_position; };
 			void deleteBullet(Bullet*);
+
+			//Lifes function
+			void Lifes(int, int);
 
 			/*======================================*/
 			/*			PUBLIC MEMBERS				*/
@@ -65,7 +69,7 @@ namespace Asteroids
 			/*======================================*/
 			Engine::Math::Vector2D m_velocity;
 			bool m_inmune;
-			//Engine::Math::Vector3D m_currentColor;
+			Engine::Math::Vector3D m_currentColor;
 			int m_respawnTime;
 			int m_usedBullets;
 			float m_currentSpeed;

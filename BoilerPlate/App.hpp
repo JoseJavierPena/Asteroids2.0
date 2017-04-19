@@ -12,7 +12,7 @@
 #include "TimeManager.hpp"
 
 //
-#include "AsteroidsGame.h"
+#include "Game.h"
 
 namespace Engine
 {
@@ -44,6 +44,10 @@ namespace Engine
 		bool Init							( );
 		void Update							( );
 		void Render							( );
+
+		//
+		std::vector<Asteroids::Entity::Ship*> ship;
+		std::vector<Asteroids::Entity::Asteroid*> ast;
 	private:
 		/* =============================================================
 		 * PRIVATE FUNCTIONS
@@ -57,6 +61,9 @@ namespace Engine
 		void OnKeyDown						( SDL_KeyboardEvent keyBoardEvent ) override;
 		void OnKeyUp						( SDL_KeyboardEvent keyBoardEvent ) override;
 
+		//
+		void CheckLives();
+		//void CheckAst();
 
 		/* =============================================================
 		 * MEMBERS
@@ -71,6 +78,9 @@ namespace Engine
 		GameState::State											m_state;
 		Engine::TimeManager*										m_timer;
 		Game::AsteroidsGame*										m_game;
+		//
+		std::vector<Asteroids::Entity::Ship*> lifesShip;
+		int lifes;
 	};
 }
 #endif /* GAME_HPP */
