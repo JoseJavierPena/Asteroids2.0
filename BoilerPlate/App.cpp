@@ -166,7 +166,7 @@ namespace Engine
 		{
 			RespawnTime++;
 
-			if (RespawnTime == 100)
+			if (RespawnTime == 120)
 			{
 				EnterColliding = false;
 				RespawnTime = 0;
