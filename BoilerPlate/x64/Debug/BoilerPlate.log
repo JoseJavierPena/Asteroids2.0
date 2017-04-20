@@ -1,20 +1,5 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Asteroids.vcxproj, Asteroids_Manuel.vcxproj, BoilerPlate.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  utilities.cpp
-  main.cpp
-  Load.cpp
-  App.cpp
-  Generating Code...
-  stb_image.c
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\stb_image.c(559): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\stb_image.c(621): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\stb_image.c(659): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\stb_image.c(760): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\stb_image.c(773): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\stb_image.c(4552): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+  ship.cpp
   BoilerPlate.vcxproj -> C:\Users\Invitado\Source\Repos\Asteroids2.0\x64\Debug\Asteroids Game.exe
   BoilerPlate.vcxproj -> C:\Users\Invitado\Source\Repos\Asteroids2.0\x64\Debug\Asteroids Game.pdb (Full PDB)
           1 file(s) copied.
