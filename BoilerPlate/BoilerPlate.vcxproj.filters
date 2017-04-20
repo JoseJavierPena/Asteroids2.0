@@ -32,6 +32,9 @@
     <ClCompile Include="Vector2.cpp">
       <Filter>Engine\Source files</Filter>
     </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>Engine\Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEvent.hpp" />
@@ -40,29 +43,35 @@
     <ClInclude Include="App.hpp">
       <Filter>Engine\Header files</Filter>
     </ClInclude>
-    <ClInclude Include="Asteroide.h">
-      <Filter>Game\Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bala.h">
-      <Filter>Game\Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Draw.h">
-      <Filter>Engine\Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyShip.h">
-      <Filter>Game\Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Load.h">
-      <Filter>Engine\Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="ship.h">
-      <Filter>Game\Header files</Filter>
-    </ClInclude>
     <ClInclude Include="utilities.hpp">
       <Filter>Engine\Header files</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2.h">
+    <ClInclude Include="MathUtils.hpp">
       <Filter>Engine\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Draw.hpp">
+      <Filter>Engine\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Load.hpp">
+      <Filter>Engine\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.hpp">
+      <Filter>Engine\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.hpp">
+      <Filter>Engine\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Asteroide.hpp">
+      <Filter>Game\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bala.hpp">
+      <Filter>Game\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShip.hpp">
+      <Filter>Game\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ship.hpp">
+      <Filter>Game\Header files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

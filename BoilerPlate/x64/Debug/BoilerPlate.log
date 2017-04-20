@@ -1,27 +1,7 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Asteroids.vcxproj, Asteroids_Manuel.vcxproj, BoilerPlate.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Vector2.cpp
   utilities.cpp
-  TimeManager.cpp
-  ship.cpp
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\ship.cpp(29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\ship.cpp(61): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\ship.cpp(94): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\ship.cpp(100): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  SDLEvent.cpp
   main.cpp
   Load.cpp
-  EnemyShip.cpp
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\enemyship.cpp(91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\enemyship.cpp(93): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\enemyship.cpp(97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\enemyship.cpp(156): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Draw.cpp
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\draw.cpp(27): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\draw.cpp(28): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\draw.cpp(29): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-c:\users\invitado\source\repos\asteroids2.0\boilerplate\draw.cpp(30): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-  Bala.cpp
-  Asteroide.cpp
   App.cpp
   Generating Code...
   stb_image.c

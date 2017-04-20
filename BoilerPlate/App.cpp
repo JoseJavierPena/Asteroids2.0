@@ -63,8 +63,8 @@ namespace Engine
 	bool App::Init()
 	{
 		// Init the external dependencies
-		//
 		bool success = SDLInit() && GlewInit();
+
 		if (!success)
 		{
 			m_state = GameState::INIT_FAILED;
@@ -72,11 +72,9 @@ namespace Engine
 		}
 
 		// Setup the viewport
-		//
 		SetupViewport();
 
 		// Change game state
-		//
 		m_state = GameState::INIT_SUCCESSFUL;
 
 		Load config;
@@ -119,7 +117,6 @@ namespace Engine
 			{
 				Index = 0;
 			}
-
 			break;
 		default:			
 			SDL_Log("%S was pressed.", keyBoardEvent.keysym.scancode);
@@ -218,7 +215,6 @@ namespace Engine
 	bool App::SDLInit()
 	{
 		// Initialize SDL's Video subsystem
-		//
 		if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		{
 			std::cerr << "Failed to init SDL" << std::endl;
@@ -260,25 +256,20 @@ namespace Engine
 	void App::SetupViewport()
 	{
 		// Defining ortho values
-		//
 		float halfWidth = m_width * 0.5f;
 		float halfHeight = m_height * 0.5f;
 
 		// Set viewport to match window
-		//
 		glViewport(0, 0, m_width, m_height);
 
 		// Set Mode to GL_PROJECTION
-		//
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
 		// Set projection MATRIX to ORTHO
-		//
 		glOrtho(-halfWidth, halfWidth, -halfHeight, halfHeight, -1, 1);
 
 		// Setting Mode to GL_MODELVIEW
-		//
 		glMatrixMode(GL_MODELVIEW);
 	}
 
@@ -317,11 +308,9 @@ namespace Engine
 	void App::OnExit()
 	{
 		// Exit main for loop
-		//
 		m_state = GameState::QUIT;
 
 		// Cleanup SDL pointers
-		//
 		CleanupSDL();
 	}
 
@@ -342,8 +331,8 @@ namespace Engine
 	{
 		if (CantVidas == 0)
 		{
-			cout << "GAME OVER!!" << endl;
-			cout << "Su Score fue de: " << Score << endl;
+			std::cout << "GAME OVER!!" << std::endl;
+			std::cout << "Su Score fue de: " << Score << std::endl;
 			std::system("Pause");
 			exit(EXIT_FAILURE);
 		}
@@ -380,6 +369,7 @@ namespace Engine
 							Ast.push_back(nEnemy);
 						}
 					}
+
 					if (size == 1)
 					{
 						for (int i = 0; i < 2; i++)
@@ -393,9 +383,7 @@ namespace Engine
 							Ast.push_back(nEnemy);
 						}
 					}
-
 					Ship[Index].Reiniciar();
-
 					break;
 				}
 
@@ -411,7 +399,6 @@ namespace Engine
 						Ship[Index].EliminarBala(Ship[Index].Balas[i]);
 
 						if (size == 0)
-
 						{
 							Score += 50;
 							for (int i = 0; i < 2; i++)

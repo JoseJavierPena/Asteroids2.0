@@ -1,5 +1,5 @@
 #include "utilities.hpp"
-#include "Vector2.h"
+#include "Vector2.hpp"
 
 using namespace std;
 
@@ -9,30 +9,30 @@ utilities::utilities()
 utilities::~utilities()
 {}
 
-vector<ship> utilities::explore(char *dir_name)
+std::vector<ship> utilities::explore(char *dir_name)
 {
-	vector<Vector2> copia;
+	std::vector<Vector2> copia;
 	int liCount = 0;
 	float l, m;
-	string coma;
+	std::string coma;
 	dir = opendir(dir_name);
 	if (!dir)
 	{
-		cout << "Directory was not found" << endl;
+		std::cout << "Directory was not found" << std::endl;
 	}
 	while ((entry = readdir(dir)) != NULL)
 	{
 		if (entry->d_name[0] != '.')
 		{
-			string path = string(dir_name) + "/" + string(entry->d_name);
+			std::string path = std::string(dir_name) + "/" + std::string(entry->d_name);
 			file.open(path.c_str());
 			if (file.good())
 			{
 				while (!file.eof())
 				{
-					vector<Vector2> Elementos;
-					getline(file, readString);
-					stringstream(readString) >> l >> coma >> m;//nuevo
+					std::vector<Vector2> Elementos;
+					std::getline(file, readString);
+					std::stringstream(readString) >> l >> coma >> m;//nuevo
 					Elementos.push_back(Vector2 (l,m));//nuevo
 					copia.push_back(Vector2(l,m)); //nuevo
 				}

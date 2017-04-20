@@ -1,7 +1,10 @@
-#include "Asteroide.h"
+#include "Asteroide.hpp"
+
+// SDL
 #include <SDL2/SDL_opengl.h>
+
+//
 #include <cmath>
-#define PI 3.141592653f
 
 const float Drag = 1.0f;
 const float Fuerza = 1.25f;

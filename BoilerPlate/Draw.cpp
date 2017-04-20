@@ -1,10 +1,12 @@
-#include "Draw.h"
+#include "Draw.hpp"
+
+// SDL
 #include <SDL2/SDL_opengl.h>
 
 draw::draw()
 { }
 
-void draw::DrawT(unsigned int mode, vector<Vector2> Point)
+void draw::DrawT(unsigned int mode, std::vector<Vector2> Point)
 {
 
 	glBegin(mode);

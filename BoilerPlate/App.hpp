@@ -7,17 +7,20 @@
 #include <list>
 #include <vector>
 
+//
+#include <random>
+#include <algorithm>
+
 // Asteroids
 #include "SDLEvent.hpp"
 #include "TimeManager.hpp"
-#include "ship.h"
-#include "Load.h"
-#include "Asteroide.h"
-#include "Draw.h"
-#include <random>
-#include <algorithm>
-#include "Bala.h"
-#include "EnemyShip.h"
+#include "ship.hpp"
+#include "Load.hpp"
+#include "Asteroide.hpp"
+#include "Draw.hpp"
+#include "Bala.hpp"
+#include "EnemyShip.hpp"
+#include "MathUtils.hpp"
 
 namespace Engine
 {
@@ -92,4 +95,4 @@ namespace Engine
 		int									CantAsteroides;
 	};
 }
-#endif /* GAME_HPP */
+#endif /* APP_HPP */

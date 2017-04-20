@@ -1,9 +1,11 @@
-#include "ship.h"
+#include "ship.hpp"
+
+// SDL
 #include <SDL2/SDL_opengl.h>
+
+//
 #include <cmath>
 #include <algorithm>
-
-#define PI 3.141592653
 
 const float AnguloAjuste = 90.0f;
 const float Fuerza = 3.0f;
@@ -21,7 +23,7 @@ ship::ship()
 	UsoBala = 0;
 }
 
-ship::ship(const vector<Vector2> points)
+ship::ship(const std::vector<Vector2> points)
 {
 	Point = points;
 	Position = Vector2(0, 0);
@@ -100,6 +102,7 @@ void ship::MoveLeft()
 	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);
 }
 
+// Wrap around
 void ship::limite()
 {
 	if (Position.GetX() > 600)
@@ -137,6 +140,7 @@ void ship::setMasa()
 	return;
 }
 
+// Set points
 void ship::setPoint()
 {
 	for (int point = 0; point < 16; ++point)
@@ -153,6 +157,7 @@ Vector2 ship::getPosition()
 	return Position;
 }
 
+// Reset ship
 void ship::Reiniciar()
 {
 	Position = Vector2(0.0f, 0.0f);

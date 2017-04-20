@@ -1,8 +1,9 @@
-#include "Bala.h"
+#include "Bala.hpp"
+
+// SDL
 #include "SDL2\SDL_opengl.h"
 
 const float AnguloAjuste = 90.0f;
-const float PI = 3.1415926535897323846f;
 const float Fuerza = 3.0f;
 
 Bala::Bala(Vector2 pos, Vector2 v, float angle)

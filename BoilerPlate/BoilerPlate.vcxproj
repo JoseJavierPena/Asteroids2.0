@@ -184,20 +184,23 @@ copy /Y "$(SolutionDir)\Externals\SDL2-2.0.4\lib\x64\SDL2.dll" "$(TargetDir)SDL2
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="utilities.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
-    <ClInclude Include="Asteroide.h" />
-    <ClInclude Include="Bala.h" />
+    <ClInclude Include="Asteroide.hpp" />
+    <ClInclude Include="Bala.hpp" />
     <ClInclude Include="dirent.h" />
-    <ClInclude Include="Draw.h" />
-    <ClInclude Include="EnemyShip.h" />
-    <ClInclude Include="Load.h" />
+    <ClInclude Include="Draw.hpp" />
+    <ClInclude Include="EnemyShip.hpp" />
+    <ClInclude Include="Load.hpp" />
+    <ClInclude Include="MathUtils.hpp" />
     <ClInclude Include="SDLEvent.hpp" />
-    <ClInclude Include="ship.h" />
+    <ClInclude Include="ship.hpp" />
     <ClInclude Include="TimeManager.hpp" />
     <ClInclude Include="utilities.hpp" />
-    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector2.hpp" />
+    <ClInclude Include="Vector3D.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

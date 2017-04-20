@@ -1,8 +1,8 @@
-#include "Load.h"
+#include "Load.hpp"
 
-vector<ship> Load::load()
+std::vector<ship> Load::load()
 {
-	vector<ship> copy;
+	std::vector<ship> copy;
 	utilities file;
 	copy = file.explore((char *)"Models");
 	return copy;

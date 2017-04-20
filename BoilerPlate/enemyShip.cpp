@@ -1,10 +1,14 @@
-#include "EnemyShip.h"
+#include "EnemyShip.hpp"
+
+// SDL
 #include <SDL2/SDL_opengl.h>
-#include "Draw.h"
+
+//
+#include "Draw.hpp"
+
+//
 #include <cmath>
 #include <algorithm>
-
-#define PI 3.141592653
 
 const float Max_Speed = 10.0f;
 const float Fuerza = 1.25f;
@@ -18,18 +22,6 @@ EnemyShip::EnemyShip()
 	, Angulo(0)
 	, PermitirDisparar(true)
 {
-	/*initShip2.push_back(Vector2(-7, 0));
-	initShip2.push_back(Vector2(-7, 11));
-	initShip2.push_back(Vector2(-5, 13));
-	initShip2.push_back(Vector2(-3, 14));
-	initShip2.push_back(Vector2(0, 15));
-	initShip2.push_back(Vector2(3, 14));
-	initShip2.push_back(Vector2(5, 12));
-	initShip2.push_back(Vector2(6, 11));
-	initShip2.push_back(Vector2(6, 0));
-	initShip2.push_back(Vector2(0, -2));
-	initShip2.push_back(Vector2(-7, 0));*/
-
 	initShip.push_back(Vector2(-2.0, 14.0));
 	initShip.push_back(Vector2(-2.0, 11.0));
 	initShip.push_back(Vector2(-14.0, 2.0));
@@ -53,17 +45,22 @@ EnemyShip::~EnemyShip()
 
 void EnemyShip::Draw()
 {
+	//Reset matrix
 	glLoadIdentity();
 
+	//Wrap around of the enemy ship
 	limite();
 
+	//Translation to the position
 	glTranslatef(PositionEnemy.GetX(), PositionEnemy.GetY(), 0.0f);
 
+	//Enemy ship rotation
 	glRotatef(Angulo, 0.0f, 0.0f, 1.0f);
 	
+	//Drawing the enemy ship
 	DrawT(GL_LINE_LOOP, initShip);
-	//DrawT(GL_LINE_LOOP, initShip2);
 	
+	//Drawing the bullets of the enemy ship
 	for (int i = 0; i < Balas.size(); i++)
 		Balas[i]->Render();
 }
@@ -162,7 +159,6 @@ void EnemyShip::EliminarBala(Bala* bala)
 	Balas.erase(remove(Balas.begin(), Balas.end(), bala), Balas.end());
 	delete bala;
 }
-
 
 void EnemyShip::setPoint()
 {
