@@ -7,12 +7,15 @@
 #include <cassert>
 #include <iostream>
 
-// Using
+// 
 #include "App.hpp"
-#include "Utilities.h"
+#include "utilities.hpp"
+#include "ship.h"
 
 const int WIDTH = 1136;
 const int HEIGHT = 640;
+
+using namespace std;
 
 int main(int argc, char* argv[])
 {
@@ -23,10 +26,10 @@ int main(int argc, char* argv[])
 	assert(_CrtCheckMemory());
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
-	
+
 	// Create Game Object
 	//
-	Engine::App* app = new Engine::App("Asteroids", WIDTH, HEIGHT);
+	Engine::App* app = new Engine::App("Boiler Plate!", WIDTH, HEIGHT);
 
 	// Initialize game
 	//

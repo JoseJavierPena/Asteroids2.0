@@ -1,55 +1,43 @@
 #pragma once
-#ifndef ENEMYSHIP_H_
-#define ENEMYSHIP_H_
+
+#ifndef _ENEMYSHIP_
+#define _ENEMYSHIP_
 
 #include <iostream>
 #include <vector>
-#include "Vector2D.h"
-#include "Bullet.h"
-#include "Ship.h"
-#include "Physics.h"
+#include "Vector2.h"
+#include "Draw.h"
+#include "Bala.h"
+#include "ship.h"
 
-namespace Asteroids
+using namespace std;
+
+class EnemyShip : public draw
 {
-	namespace Entity
-	{
-		class EnemyShip : public Entities
-		{
-		public:
-			/*=============================
-			======PUBLIC FUNCTIONS=========
-			==============================*/
-			EnemyShip();
-			EnemyShip(const std::vector<Engine::Math::Vector2D> points);
-			~EnemyShip();
-			void Render();
-			void drawEnemyShip(unsigned int mode, std::vector<Engine::Math::Vector2D> point);
-			void Update(float deltaTime);
-			void RandomTranslation(Engine::Math::Vector2D pos);
-			void limit();
-			void shoot(Engine::Math::Vector2D position);
-			void deleteBullet(Bullet* bullet);
-			void setPoint();
+public: EnemyShip();
+		~EnemyShip();
+		void Draw();
+		void Update(float deltatime, Vector2 Position);
+		void Trasladar(Vector2 newPos);
+		void limite();
+		void Disparar(Vector2 Position);
+		void EliminarBala(Bala* bala);
+		void setPoint();
+		vector<Bala*> Balas;
 
-			/*=============================
-			========PUBLIC MEMBERS=========
-			==============================*/
-			std::vector<Bullet*> bull;
+private: vector<Vector2> initShip;
+		 //vector<Vector2> initShip2;
+		 Vector2 PositionEnemy;
+		 vector<Vector2> Circulo;
+		 float Radio;
+		 float IncreX;
+		 int Time;
+		 int Time2;
+		 float Angulo;
+		 bool PermitirDisparar;
+};
 
-		private:
-			/*=============================
-			========PUBLIC MEMBERS=========
-			==============================*/
-			std::vector<Engine::Math::Vector2D> m_points;
-			Engine::Math::Vector2D enemyPos;
-			std::vector<Engine::Math::Vector2D> points_circle;
-			Engine::Math::Vector2D m_velocity;
-			float increaseX;
-			float EnemyAngle;
-			float EnemyRadius;
-			bool canShoot;
-		};
-	}
-}
 
-#endif // !ENEMYSHIP_H_
+
+
+#endif // !_ENEMYSHIP_

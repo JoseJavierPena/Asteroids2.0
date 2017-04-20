@@ -1,80 +1,58 @@
 #pragma once
 
-#ifndef PlayerModel_H_
-#define PlayerModel_H_
+#ifndef _SHIP_
+#define _SHIP_
 
-//Std
+using namespace std;
+
+#include <conio.h>
+#include <iostream>
+#include <Windows.h>
 #include <vector>
+#include "Vector2.h"
+#include "Draw.h"
+#include <conio.h>
+#include <time.h>
+#include "Bala.h"
 
-//Math includes
-#include "MathUtils.h"
-#include "Physics.h"
-
-//Game includes
-#include "Entities.h"
-#include "Bullet.h"
-
-namespace Asteroids 
+class ship : public draw
 {
-	namespace Entity
-	{
-		class Ship : public Entities
-		{
-		public:
+public:
+	ship();
+	ship(const vector<Vector2> points);
+	void Draw();
+	void MoveUp();
+	void MoveDown();
+	void MoveRight();
+	void MoveLeft();
+	void Trasladar(Vector2 position);
+	void limite();
+	void setMasa();
+	void setPoint();
+	Vector2 getPosition();
+	void Reiniciar();
+	void Update(float deltatime);
+	void Disparar();
+	void EliminarBala(Bala* bala);
+	void Vidas(int vidas, int index);
+	vector<Bala*> Balas;
+	Vector2 Position;
 
-			/*======================================*/
-			/*			PUBLIC FUNCTIONS			*/
-			/*======================================*/
-			Ship();
-			Ship(std::vector<Engine::Math::Vector2D> model_points);
-			void Render() override;
-			void MoveForward();
-			void MoveRight();
-			void MoveLeft();
-			void Shoot();
-			void Update(float deltaTime) override;
-			void Respawn();
-			bool canCollide() const { return m_inmune; };
-			void setCollision(bool status) { m_inmune = status; };
-			void setVelocity(Engine::Math::Vector2D v) { m_velocity = v; };
-			Engine::Math::Vector2D getPosition() const { return m_position; };
-			void deleteBullet(Bullet*);
+private: vector<Vector2> Point;
+		 vector<Vector2> Circulo;
+		 Vector2 Velocity;
+		 float Angulo;
+		 float AnguloRadianes;
+		 float Masa;
+		 float RadioShip;
+		 float Speed;
+		 Vector2 Min;
+		 Vector2 Max;
+		 bool Inmune;
+		 int Time;
+		 int UsoBala;
+};
 
-			//Lifes function
-			void Lifes(int, int);
 
-			/*======================================*/
-			/*			PUBLIC MEMBERS				*/
-			/*======================================*/
-			std::vector<Bullet*> m_magazine;
+#endif // !_SHIP_
 
-		protected:
-
-			/*======================================*/
-			/*			PRIVATE FUNCTIONS			*/
-			/*======================================*/
-			void wrapAround() override;
-			void rotate(float num) override;
-			void translate(Engine::Math::Vector2D pos) override;
-
-		private:
-			/*======================================*/
-			/*			PRIVATE FUNCTIONS			*/
-			/*======================================*/
-			void Mass();
-			void ResetOrientation();
-
-			/*======================================*/
-			/*			PRIVATE MEMBERS				*/
-			/*======================================*/
-			Engine::Math::Vector2D m_velocity;
-			bool m_inmune;
-			Engine::Math::Vector3D m_currentColor;
-			int m_respawnTime;
-			int m_usedBullets;
-			float m_currentSpeed;
-		};
-	}
-}
-
-#endif // !PlayerModel_H_

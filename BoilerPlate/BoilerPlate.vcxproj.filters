@@ -2,104 +2,87 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="stb_image.c" />
     <ClCompile Include="SDLEvent.cpp" />
     <ClCompile Include="TimeManager.cpp" />
-    <ClCompile Include="Asteroid.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entities.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ship.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2D.cpp">
-      <Filter>Engine\Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3D.cpp">
-      <Filter>Engine\Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities.cpp">
-      <Filter>Engine\Source files</Filter>
-    </ClCompile>
+    <ClCompile Include="stb_image.c" />
     <ClCompile Include="App.cpp">
       <Filter>Engine\Source files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Game\Source Files</Filter>
+    <ClCompile Include="Asteroide.cpp">
+      <Filter>Game\Source files</Filter>
     </ClCompile>
-    <ClCompile Include="enemyShip.cpp">
-      <Filter>Game\Source Files</Filter>
+    <ClCompile Include="Bala.cpp">
+      <Filter>Game\Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw.cpp">
+      <Filter>Engine\Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyShip.cpp">
+      <Filter>Game\Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Load.cpp">
+      <Filter>Engine\Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="ship.cpp">
+      <Filter>Game\Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities.cpp">
+      <Filter>Engine\Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Engine\Source files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEvent.hpp" />
     <ClInclude Include="TimeManager.hpp" />
-    <ClInclude Include="Asteroid.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entities.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ship.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities.h">
-      <Filter>Engine\Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="MathUtils.h">
-      <Filter>Engine\Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2D.h">
-      <Filter>Engine\Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3D.h">
-      <Filter>Engine\Header files</Filter>
-    </ClInclude>
+    <ClInclude Include="dirent.h" />
     <ClInclude Include="App.hpp">
       <Filter>Engine\Header files</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Game\Header Files</Filter>
+    <ClInclude Include="Asteroide.h">
+      <Filter>Game\Header files</Filter>
     </ClInclude>
-    <ClInclude Include="enemyShip.h">
-      <Filter>Game\Header Files</Filter>
+    <ClInclude Include="Bala.h">
+      <Filter>Game\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Draw.h">
+      <Filter>Engine\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShip.h">
+      <Filter>Game\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Load.h">
+      <Filter>Engine\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ship.h">
+      <Filter>Game\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities.hpp">
+      <Filter>Engine\Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Engine\Header files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
-      <UniqueIdentifier>{6f9fb37f-e47b-46c3-8209-dbf486018555}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Source files">
-      <UniqueIdentifier>{0a3ec513-922c-4b14-83e3-98e1934fea74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Header files">
-      <UniqueIdentifier>{da8cc683-e66e-46b9-be58-7d0e16e23f76}</UniqueIdentifier>
+      <UniqueIdentifier>{18ee017e-e217-4894-a329-443882d5c001}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game">
-      <UniqueIdentifier>{645ef11d-5e03-4b7b-afc2-1577024558d7}</UniqueIdentifier>
+      <UniqueIdentifier>{f9b0d22c-f012-4a2a-92ff-afb3483d6cab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Header Files">
-      <UniqueIdentifier>{7b602fbb-c8eb-46ab-8c84-446f20006e0a}</UniqueIdentifier>
+    <Filter Include="Engine\Header files">
+      <UniqueIdentifier>{d57a6b01-fbed-4c86-8222-9072e2b4fa58}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Source Files">
-      <UniqueIdentifier>{b60a2393-11ec-4a51-8285-c20a38612f0a}</UniqueIdentifier>
+    <Filter Include="Engine\Source files">
+      <UniqueIdentifier>{8e8f830e-8173-495c-9161-9cfadfdf0c57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Header files">
+      <UniqueIdentifier>{7b731e89-4b76-4023-90e9-f1e308754824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Source files">
+      <UniqueIdentifier>{20f695a9-d112-4cf5-be2c-d75bf9d1a1ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

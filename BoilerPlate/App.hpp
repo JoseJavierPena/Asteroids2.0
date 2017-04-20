@@ -10,10 +10,14 @@
 // Asteroids
 #include "SDLEvent.hpp"
 #include "TimeManager.hpp"
-
-//
-#include "Game.h"
-#include "enemyShip.h"
+#include "ship.h"
+#include "Load.h"
+#include "Asteroide.h"
+#include "Draw.h"
+#include <random>
+#include <algorithm>
+#include "Bala.h"
+#include "EnemyShip.h"
 
 namespace Engine
 {
@@ -45,10 +49,9 @@ namespace Engine
 		bool Init							( );
 		void Update							( );
 		void Render							( );
-
-		//
-		std::vector<Asteroids::Entity::Ship*> ship;
-		std::vector<Asteroids::Entity::Asteroid*> ast;
+		int Index;
+		std::vector<ship> Ship;
+		std::vector<Asteroide*> Ast;
 	private:
 		/* =============================================================
 		 * PRIVATE FUNCTIONS
@@ -61,31 +64,32 @@ namespace Engine
 		void OnExit							( ) override;
 		void OnKeyDown						( SDL_KeyboardEvent keyBoardEvent ) override;
 		void OnKeyUp						( SDL_KeyboardEvent keyBoardEvent ) override;
+		void CheckColliding					( );
+		void CheckLive						( );
+		void CheckAst						( );
 
-		//
-		void CheckLives();
-		//void CheckAst();
 
 		/* =============================================================
-		 * PRIVATE MEMBERS
+		 * MEMBERS
 		 * ============================================================= */
-		int															m_width;
-		int															m_height;
-		int															m_nUpdates;
-		double														m_lastFrameTime;
-		std::string													m_title;
-		SDL_Window*													m_mainWindow;
-		SDL_GLContext												m_context;
-		GameState::State											m_state;
-		Engine::TimeManager*										m_timer;
-		Game::Game*													m_game;
-		
-		//Lifes
-		std::vector<Asteroids::Entity::Ship*> lifesShip;
-		int lifes;
-
-		//Enemy ship
-		//Asteroids::Entity::EnemyShip enemy;
+		int									m_width;
+		int									m_height;
+		int									m_nUpdates;
+		double								m_lastFrameTime;
+		std::string							m_title;
+		SDL_Window*							m_mainWindow;
+		SDL_GLContext						m_context;
+		GameState::State					m_state;
+		Engine::TimeManager*				m_timer;
+		std::vector<ship>				    ShipVidas;
+		int									CantVidas;
+		EnemyShip							enemy;
+		int									Score;
+		bool								Entro;
+		int									Time;
+		int									RespawnTime;
+		bool								EnterColliding;
+		int									CantAsteroides;
 	};
 }
 #endif /* GAME_HPP */

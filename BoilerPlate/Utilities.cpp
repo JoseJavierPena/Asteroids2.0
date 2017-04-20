@@ -1,78 +1,54 @@
-#include "Utilities.h"
+#include "utilities.hpp"
+#include "Vector2.h"
 
-std::vector<std::string> Engine::FileSystem::Utilities::ListFile(std::string file)
+using namespace std;
+
+utilities::utilities()
+{}
+
+utilities::~utilities()
+{}
+
+vector<ship> utilities::explore(char *dir_name)
 {
-	std::string path(getPath(file));
-	std::wstring w_path(path.begin(), path.end());
-	WIN32_FIND_DATA fileFinder;
-	std::vector<std::string> vs;
-	HANDLE hFind;
-	hFind = FindFirstFile(w_path.c_str(), &fileFinder);
-	if (hFind != INVALID_HANDLE_VALUE)
+	vector<Vector2> copia;
+	int liCount = 0;
+	float l, m;
+	string coma;
+	dir = opendir(dir_name);
+	if (!dir)
 	{
-		do
-		{
-			std::wstring fname(fileFinder.cFileName);
-			vs.push_back(std::string(fname.begin(), fname.end()));
-		} while (FindNextFile(hFind, &fileFinder));
+		cout << "Directory was not found" << endl;
 	}
-	FindClose(hFind);
-
-	return vs;
-}
-
-void Engine::FileSystem::Utilities::printUtil(std::vector<std::string> list)
-{
-	for (int i = 2; i < list.size(); i++)
+	while ((entry = readdir(dir)) != NULL)
 	{
-		std::cout << "File name: " << list.at(i) << std::endl;
-		std::cout << std::endl;
-		std::cout << "FILE CONTENT :" << std::endl;
-		printFileContent(list.at(i));
-		std::cout << std::endl;
-	}
-}
-
-std::string Engine::FileSystem::Utilities::buildPath(std::string pre, std::string pos)
-{
-	std::string path;
-	path = pre + "\\" + pos;
-	return path;
-}
-
-std::string Engine::FileSystem::Utilities::getPath(std::string file)
-{
-	wchar_t buff[MAX_PATH];
-	GetModuleFileName(NULL, buff, MAX_PATH);
-	std::wstring w_dir(buff);
-	std::string s_dir(w_dir.begin(), w_dir.end());
-	s_dir = s_dir.substr(0, s_dir.find_last_of("\\/"));
-	s_dir += "\\" + file;
-	std::wstring current(s_dir.begin(), s_dir.end());
-	current += L"/*.*";
-	return std::string(current.begin(), current.end());
-}
-
-void Engine::FileSystem::Utilities::printFileContent(std::string fileName)
-{
-	std::ifstream inFile(fileName, std::ifstream::in);
-	std::string temp("");
-	std::string firstnumget;
-	std::string secondnumget;
-	float n1 = 0.0;
-	float n2 = 0.0;
-
-	if (inFile.good())
-	{
-		while (!inFile.eof())
+		if (entry->d_name[0] != '.')
 		{
-			inFile >> temp;
-			firstnumget = temp.substr(0, temp.find_last_of(","));
-			secondnumget = temp.substr(temp.find_last_of(",") + 1, temp.length());
-			n1 = std::stof(firstnumget);
-			n2 = std::stof(secondnumget);
-			std::cout << n1 << "," << n2 << std::endl;
+			string path = string(dir_name) + "/" + string(entry->d_name);
+			file.open(path.c_str());
+			if (file.good())
+			{
+				while (!file.eof())
+				{
+					vector<Vector2> Elementos;
+					getline(file, readString);
+					stringstream(readString) >> l >> coma >> m;//nuevo
+					Elementos.push_back(Vector2 (l,m));//nuevo
+					copia.push_back(Vector2(l,m)); //nuevo
+				}
+				//cout << "Para el model: " << entry->d_name << " se ha leido " << copia.size() << endl; //nuevo
+				Ship.push_back(copia);
+				copia.clear(); //nuevo
+				//cout << "" << endl;
+			}
+			file.close();
+			stat(path.c_str(), &info); //
+			if (S_ISDIR(info.st_mode))
+			{
+				explore((char *)path.c_str());
+			}
 		}
-		return;
 	}
+	return Ship;
+	closedir(dir);
 }

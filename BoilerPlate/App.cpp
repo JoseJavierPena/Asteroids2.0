@@ -6,14 +6,10 @@
 #include <GL/glew.h>
 #include <SDL2/SDL_opengl.h>
 
-//Load
-#include "Utils.h"
-
 namespace Engine
 {
 	const float DESIRED_FRAME_RATE = 60.0f;
 	const float DESIRED_FRAME_TIME = 1.0f / DESIRED_FRAME_RATE;
-	bool stop = true;
 
 	App::App(const std::string& title, const int width, const int height)
 		: m_title(title)
@@ -22,18 +18,19 @@ namespace Engine
 		, m_nUpdates(0)
 		, m_timer(new TimeManager)
 		, m_mainWindow(nullptr)
-		, lifes(3)
+		, CantVidas(3)
+		, Entro(false)
+		, Time(0)
+		, RespawnTime(0)
+		, Score(0)
+		, CantAsteroides(1)
 	{
-		m_game = new Game::Game(width, height);
 		m_state = GameState::UNINITIALIZED;
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
 	}
 
 	App::~App()
 	{
-		//Eliminating pointer to game
-		delete m_game;
-
 		CleanupSDL();
 	}
 
@@ -82,21 +79,16 @@ namespace Engine
 		//
 		m_state = GameState::INIT_SUCCESSFUL;
 
-		//Game initialization
-		m_game->Init();
+		Load config;
+		Ship = config.load();
+		ShipVidas = config.load();
+		Index = 0;
+		enemy = EnemyShip();
 
-		//Prints
-		std::cout << "Frame Rate: " << DESIRED_FRAME_RATE << " FPS" << std::endl;
-
-		//Adding lifes - TODO
-		Asteroids::Utilities::Load config;
-		ship = config.LoadModels();
-		lifesShip = config.LoadModels();
-
-		for (int i = 0; i < lifes; i++)
+		for (int i = 0; i < CantAsteroides; i++)
 		{
-			Asteroids::Entity::Asteroid* newAst = new Asteroids::Entity::Asteroid();
-			ast.push_back(newAst);
+			Asteroide* newAst = new Asteroide();
+			Ast.push_back(newAst);
 		}
 
 		return true;
@@ -107,41 +99,30 @@ namespace Engine
 		switch (keyBoardEvent.keysym.scancode)
 		{
 		case SDL_SCANCODE_W:
-			m_game->m_player[m_game->m_playerIndex]->MoveForward();
-			
-			break;
-		case SDL_SCANCODE_A:
-			m_game->m_player[m_game->m_playerIndex]->MoveLeft();
+			Ship[Index].MoveUp();
 			break;
 		case SDL_SCANCODE_S:
-			//NOTHING
+			Ship[Index].MoveDown();
+			break;
+		case SDL_SCANCODE_A:
+			Ship[Index].MoveLeft();
 			break;
 		case SDL_SCANCODE_D:
-			m_game->m_player[m_game->m_playerIndex]->MoveRight();
-			break;
-		case SDL_SCANCODE_UP:
-			m_game->m_player[m_game->m_playerIndex]->MoveForward();
-			break;
-		case SDL_SCANCODE_LEFT:
-			m_game->m_player[m_game->m_playerIndex]->MoveLeft();
-			break;
-		case SDL_SCANCODE_RIGHT:
-			m_game->m_player[m_game->m_playerIndex]->MoveRight();
-			break;
-		case SDL_SCANCODE_DOWN:
+			Ship[Index].MoveRight();
 			break;
 		case SDL_SCANCODE_SPACE:
-			m_game->m_player[m_game->m_playerIndex]->Shoot();
+			Ship[Index].Disparar();
 			break;
 		case SDL_SCANCODE_P:
-			//Do nothing
+			Index++;
+			if (Index > (Ship.size() - 1))
+			{
+				Index = 0;
+			}
+
 			break;
-		//case SDL_SCANCODE_J:
-		//	//Pausing the game or ending the game
-		//	system("PAUSE");
-			break;
-		default:
-			SDL_Log("Not binded key.", keyBoardEvent.keysym.scancode);
+		default:			
+			SDL_Log("%S was pressed.", keyBoardEvent.keysym.scancode);
 			break;
 		}
 	}
@@ -150,25 +131,6 @@ namespace Engine
 	{
 		switch (keyBoardEvent.keysym.scancode)
 		{
-		case SDL_SCANCODE_W:
-			break;				  
-		case SDL_SCANCODE_A:	 
-			break;				  
-		case SDL_SCANCODE_S:	  
-			break;				  
-		case SDL_SCANCODE_D:	  
-			break;
-		case SDL_SCANCODE_P:
-			m_game->m_playerIndex++;
-			break;
-		case SDL_SCANCODE_UP:
-			break;
-		case SDL_SCANCODE_LEFT:
-			break;
-		case SDL_SCANCODE_DOWN:
-			break;
-		case SDL_SCANCODE_RIGHT:
-			break;
 		case SDL_SCANCODE_ESCAPE:
 			OnExit();
 			break;
@@ -182,22 +144,38 @@ namespace Engine
 	{
 		double startTime = m_timer->GetElapsedTimeInSeconds();
 
-		// Update code goes here
-		//
-		m_game->Update(DESIRED_FRAME_RATE);
+		//Update of the ship
+		Ship[Index].Update(DESIRED_FRAME_RATE);
 
-		//Update of asteroids
-		for (int i = 0; i < ast.size(); i++)
+		//Update of the enemy ship
+		enemy.Update(DESIRED_FRAME_RATE, Ship[Index].Position);
+
+		//Update of the asteroids
+		for (int i = 0; i < Ast.size(); i++)
 		{
-			ast.at(i)->Update(DESIRED_FRAME_RATE);
+			Ast.at(i)->Mover(DESIRED_FRAME_RATE);
+		}
+		
+		//Check if you have live or not
+		CheckLive();
+
+		//Check for asteroids yes or no
+		CheckAst();
+
+		//Check all collisions
+		if(EnterColliding != true)
+			CheckColliding();
+		else
+		{
+			RespawnTime++;
+
+			if (RespawnTime == 100)
+			{
+				EnterColliding = false;
+				RespawnTime = 0;
+			}
 		}
 
-		//Checking lives and game over function
-		CheckLives();
-
-		//Checking asteroids - Not working yet
-		//CheckAst();
-		
 		double endTime = m_timer->GetElapsedTimeInSeconds();
 		double nextTimeFrame = startTime + DESIRED_FRAME_TIME;
 
@@ -218,16 +196,25 @@ namespace Engine
 	{
 		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		//Draw the ships
+		Ship[Index].Draw();
+
+		//Draw the lives of the ships
+		ShipVidas[Index].Vidas(CantVidas,Index);
+
+		//Draw the enemy ships
+		enemy.Draw();
+
+		//Draw the asteroids
+		for (int i = 0; i < Ast.size(); i++)
+		{
+			Ast.at(i)->DrawAst();
+		}
 		
-		//Drawing the ship
-		m_game->Render();
-
-		//Drawing the lifes of the ship
-		lifesShip[0]->Lifes(lifes, 0);
-
 		SDL_GL_SwapWindow(m_mainWindow);
 	}
-	
+
 	bool App::SDLInit()
 	{
 		// Initialize SDL's Video subsystem
@@ -338,28 +325,162 @@ namespace Engine
 		CleanupSDL();
 	}
 
-	void App::CheckLives()
-	{	
-		if (lifes == 0)
+	void App::CheckAst()
+	{
+		if (Ast.size() == 0)
 		{
-			std::cout << "GAME OVER!" << std::endl;
-			//std::cout << "Score: " << score << std::endl;
-			std::system("PAUSE");
+			CantAsteroides += 2;
+			for (int i = 0; i < CantAsteroides; i++)
+			{
+				Asteroide* newAst = new Asteroide();
+				Ast.push_back(newAst);
+			}
+		}
+	}
+
+	void App::CheckLive()
+	{
+		if (CantVidas == 0)
+		{
+			cout << "GAME OVER!!" << endl;
+			cout << "Su Score fue de: " << Score << endl;
+			std::system("Pause");
 			exit(EXIT_FAILURE);
 		}
 	}
 
-	/*void App::CheckAst()
+	void App::CheckColliding()
 	{
-		if (ast.size() == 0)
-		{
-			cantAsteroids += 2;
+		bool bulletHit = false;
 
-			for (int i = 0; i < cantAsteroids; i++)
+		for (auto copy : Ast)
+		{
+			Asteroide* pAst = dynamic_cast<Asteroide*> (copy);
+			if (pAst)
 			{
-				Asteroids::Entity::Asteroid* newAst = new Asteroids::Entity::Asteroid();
-				ast.push_back(newAst);
+				if (Ship[Index].Colliding(*copy))
+				{
+					EnterColliding = true;
+					CantVidas--;
+					int size = pAst->getSize();
+
+					Ast.erase(remove(Ast.begin(), Ast.end(), copy), Ast.end());
+					delete copy;
+
+					if (size == 0)
+					{
+						for (int i = 0; i < 2; i++)
+						{
+							Vector2 PosAleatoria;
+							float x = static_cast<float> (-400 + (400 + 400) * (rand() / static_cast<float> (RAND_MAX)));
+							float y = static_cast<float> (-400 + (400 + 400) * (rand() / static_cast<float> (RAND_MAX)));
+							PosAleatoria = Vector2(x, y);
+
+							Asteroide* nEnemy = new Asteroide(PosAleatoria, 1);
+							Ast.push_back(nEnemy);
+						}
+					}
+					if (size == 1)
+					{
+						for (int i = 0; i < 2; i++)
+						{
+							Vector2 PosAleatoria;
+							float x = static_cast<float> (-300 + (300 + 300) * (rand() / static_cast<float> (RAND_MAX)));
+							float y = static_cast<float> (-300 + (300 + 300) * (rand() / static_cast<float> (RAND_MAX)));
+							PosAleatoria = Vector2(x, y);
+
+							Asteroide* nEnemy = new Asteroide(PosAleatoria, 2);
+							Ast.push_back(nEnemy);
+						}
+					}
+
+					Ship[Index].Reiniciar();
+
+					break;
+				}
+
+				for (int i = 0; i < Ship[Index].Balas.size(); i++)
+				{
+					if (Ship[Index].Balas[i]->Colliding(*pAst))
+					{
+						int size = pAst->getSize();
+
+						Ast.erase(remove(Ast.begin(), Ast.end(), copy), Ast.end());
+						delete copy;
+
+						Ship[Index].EliminarBala(Ship[Index].Balas[i]);
+
+						if (size == 0)
+
+						{
+							Score += 50;
+							for (int i = 0; i < 2; i++)
+							{
+								Vector2 PosAleatoria;
+								float x = static_cast<float> (-400 + (400 + 400) * (rand() / static_cast<float> (RAND_MAX)));
+								float y = static_cast<float> (-400 + (400 + 400) * (rand() / static_cast<float> (RAND_MAX)));
+								PosAleatoria = Vector2(x, y);
+
+								Asteroide* nEnemy = new Asteroide(PosAleatoria, 1);
+								Ast.push_back(nEnemy);
+							}
+						}
+						if (size == 1)
+						{
+							Score += 100;
+							for (int i = 0; i < 2; i++)
+							{
+								Vector2 PosAleatoria;
+								float x = static_cast<float> (-300 + (300 + 300) * (rand() / static_cast<float> (RAND_MAX)));
+								float y = static_cast<float> (-300 + (300 + 300) * (rand() / static_cast<float> (RAND_MAX)));
+								PosAleatoria = Vector2(x, y);
+
+								Asteroide* nEnemy = new Asteroide(PosAleatoria, 2);
+								Ast.push_back(nEnemy);
+							}
+						}
+						if (size == 2)
+							Score += 200;
+
+						bulletHit = true;
+					}
+				}
+				if (bulletHit == true)
+					break;
+
+				for (int x = 0; x < enemy.Balas.size(); x++)
+				{
+					if (enemy.Balas[x]->Colliding(Ship[Index]))
+					{
+						EnterColliding = true;
+						CantVidas--;
+						Ship[Index].Reiniciar();
+						enemy.EliminarBala(enemy.Balas[x]);
+						break;
+					}
+				}
+
+				for (int x = 0; x < Ship[Index].Balas.size(); x++)
+				{
+					if (Ship[Index].Balas[x]->Colliding(enemy))
+					{
+						Score += 300;
+						enemy.~EnemyShip();
+						Ship[Index].EliminarBala(Ship[Index].Balas[x]);
+						Entro = true;
+					}
+				}
+
+				if (Entro == true)
+				{
+					if (Time == 1000)
+					{
+						enemy = EnemyShip();
+					}
+					Time++;
+				}
 			}
+
 		}
-	}*/
+	}
 }

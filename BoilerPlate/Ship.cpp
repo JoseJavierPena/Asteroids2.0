@@ -1,278 +1,252 @@
-#include "Ship.h"
-
-//OpenGL includes
-#include "SDL2\SDL_opengl.h"
-
-//STD
+#include "ship.h"
+#include <SDL2/SDL_opengl.h>
 #include <cmath>
-
-//
 #include <algorithm>
 
-//Physics includes
-#include "Physics.h"
+#define PI 3.141592653
 
+const float AnguloAjuste = 90.0f;
+const float Fuerza = 3.0f;
+const float Drag = 0.999f;
+const float Max_Speed = 10.0f;
 
-namespace Asteroids
+ship::ship()
+	: Velocity(0,0)
+	, RadioShip(40.0f)
+	, Position(Vector2(0,0))
 {
-	namespace Entity
+	setRadioAl(RadioShip);
+	setMasa();
+	setPoint();
+	UsoBala = 0;
+}
+
+ship::ship(const vector<Vector2> points)
+{
+	Point = points;
+	Position = Vector2(0, 0);
+	Angulo = 0;
+	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);
+	RadioShip = 40.0f;
+	setRadioAl(RadioShip);
+	setMasa();
+	Time = 0;
+	setPoint();
+	UsoBala = 0;
+}
+
+void ship::Draw()
+{
+	glLoadIdentity();
+
+	limite();
+
+	glTranslatef(Position.GetX(),Position.GetY(), 0.0f);
+
+	glRotatef(Angulo, 0.0f, 0.0f, 1.0f);
+
+	if (!Inmune)
 	{
-		const float ROTATION_SPEED = 5.0f;
-
-		Ship::Ship()
-			: m_velocity()
-			, m_usedBullets(0)
-		{};
-
-		Ship::Ship(std::vector<Engine::Math::Vector2D> model_points)
-			: m_velocity()
-			, m_usedBullets(0)
+		if (Time >= 100)
 		{
-			m_points = model_points;
-			m_radius = 40.f;
-			m_angle = 0.f;
-			m_angleInRads = 0.f;
-			Mass();
-			m_respawnTime = 0;
-			m_currentColor = Engine::Math::Vector3D(1.f);
-			m_currentSpeed = 0.f;
-		};
+			Inmune = true;
+			Time = 0;
+			glColor3f(1.0f, 1.0f, 1.0f);
+		}
+		Time++;
+	}
 
-		void Ship::Render()
+	DrawT(GL_LINE_LOOP, Point);
+ 	
+	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);
+
+	for (int i = 0; i < Balas.size(); i++)
+		Balas[i]->Render();
+}
+
+void ship::Trasladar(Vector2 position)
+{
+	Position = position;
+	setPosAl(Position);
+}
+
+void ship::MoveUp()
+{
+	if (Masa > 0)
+	{
+		Vector2 velocity = Vector2((Fuerza / Masa) * cosf(AnguloRadianes), (Fuerza / Masa) * sinf(AnguloRadianes));
+		Velocity += velocity;
+	}
+}
+
+void ship::MoveDown()
+{
+	if (Masa > 0)
+	{
+		Vector2 velocity = Vector2(-(Fuerza / Masa) * cosf(AnguloRadianes), -(Fuerza / Masa) * sinf(AnguloRadianes));
+		Velocity += velocity;
+	}
+}
+
+void ship::MoveRight()
+{
+	Angulo -= 5.0f;
+	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);	
+}
+
+void ship::MoveLeft()
+{
+	Angulo += 5.0f;
+	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);
+}
+
+void ship::limite()
+{
+	if (Position.GetX() > 600)
+	{
+		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Trasladar(newPos);
+	}
+	else if (Position.GetX() < -600)
+	{
+		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Trasladar(newPos);
+	}
+	else if (Position.GetY() > 350)
+	{
+		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Trasladar(newPos);
+	}
+	else if (Position.GetY() < -350)
+	{
+		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Trasladar(newPos);
+	}
+}
+
+void ship::setMasa()
+{
+	for (auto count : Point)
+	{
+		Masa += 0.2f;
+	}
+
+	if (Masa < 2.0f)
+		Masa = 1.5f;
+
+	return;
+}
+
+void ship::setPoint()
+{
+	for (int point = 0; point < 16; ++point)
+	{
+		float valor = static_cast<float> (2.0f * PI * (point / 16.0f));
+		float x = RadioShip * cosf(valor);
+		float y = RadioShip * sinf(valor);
+		Circulo.push_back(Vector2(x, y));
+	}
+}
+
+Vector2 ship::getPosition()
+{
+	return Position;
+}
+
+void ship::Reiniciar()
+{
+	Position = Vector2(0.0f, 0.0f);
+	Angulo = 0;
+	AnguloRadianes = 0;
+	Velocity = Vector2(0.0f, 0.0f);
+	Inmune = false;
+
+	glColor3f(1.0f, 0.0f, 0.0f);
+
+	glBegin(GL_LINE_LOOP);
+	for (auto point : Point)
+	{
+		glVertex2f(point.GetX(), point.GetY());
+	}
+	glEnd();
+}
+
+void ship::Update(float deltatime)
+{
+	float speed = fabs(Velocity.getLengt());
+	if (speed > Max_Speed)
+	{
+		Velocity = Vector2((Velocity.GetX() / speed) * Max_Speed, (Velocity.GetY() / speed) * Max_Speed);
+
+		Speed = fabs(Velocity.getLengt());
+	}
+
+	Velocity = Vector2(Velocity.GetX() * Drag, Velocity.GetY() * Drag);
+
+	Vector2 pos = Position + Velocity;
+	Trasladar(pos);
+
+	for (int i = 0; i < Balas.size(); i++)
+	{
+		Balas[i]->Update(deltatime);
+		if (Balas[i]->m_lifeTime >= 240)
 		{
-			// Respawn delay
-			if (!m_inmune) 
-			{
-				if (m_respawnTime >= 120)
-				{
-					setCollision(true);
-					m_respawnTime = 0;
-					m_currentColor = Engine::Math::Vector3D(0.f);
-				}
-				m_respawnTime++;
-			}
+			EliminarBala(Balas[i]);
+			break;
+		}
+	}
+}
 
-			// Reset matrix
+void ship::Disparar()
+{
+	if (UsoBala == 100) return;
+	else if (UsoBala < 100)
+	{
+		Bala* nBullet = new Bala(Position, Velocity, Angulo);
+		Balas.push_back(nBullet);
+		UsoBala++;
+	}
+}
+
+void ship::EliminarBala(Bala* bala)
+{
+	Balas.erase(remove(Balas.begin(), Balas.end(), bala), Balas.end());
+	delete bala;
+	UsoBala--;
+}
+
+void ship::Vidas(int vidas, int index)
+{
+	if (index != 2)
+	{
+		int Suma = 380;
+		for (int x = 0; x < vidas; x++)
+		{
 			glLoadIdentity();
 
-			// Wrap around call
-			wrapAround();
-
-			// Translation to ship position
-			glTranslatef(m_position.m_x, m_position.m_y, 0.0f);
-
-			// Ship rotation to current angle
-			glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
-
-			//Color changing
-			glColor3f(0.0f, 1.0f, 0.0f);
-
-			// Ship drawing
 			glBegin(GL_LINE_LOOP);
-			for (auto temp : m_points)
+			for (auto point : Point)
 			{
-				glVertex2f(temp.m_x, temp.m_y);
+				glVertex2f(point.GetX() + Suma, point.GetY() + 275);
 			}
 			glEnd();
-
-			m_angleInRads = (m_angle + Asteroids::angle_offset) * (Engine::Math::PI / 180);
-
-			for (int i = 0; i < m_magazine.size(); i++)
-				m_magazine[i]->Render();
-
-
-			return;
+			Suma += 70;
 		}
-
-		void Ship::MoveForward()
+	}
+	else
+	{
+		int Suma = 400;
+		for (int x = 0; x < vidas; x++)
 		{
-			// Making impulse and rotation
-			if (m_mass > 0)
+			glLoadIdentity();
+
+			glBegin(GL_LINE_LOOP);
+			for (auto point : Point)
 			{
-				float impulse = (Physics::THRUST / m_mass);
-				float x = impulse * std::cosf(m_angleInRads);
-				float y = impulse * std::sinf(m_angleInRads);
-
-				m_velocity += Engine::Math::Vector2D(x, y);
+				glVertex2f(point.GetX() + Suma, point.GetY() + 295);
 			}
-		}
-
-		void Ship::MoveRight()
-		{
-			rotate((-5.0f) - ROTATION_SPEED);
-		}
-
-		void Ship::MoveLeft()
-		{
-			rotate((5.0f) + ROTATION_SPEED);
-		}
-
-		void Ship::Shoot()
-		{
-			if (m_usedBullets == 100) return;
-			else if (m_usedBullets < 100)
-			{
-				Bullet* nBullet = new Bullet(m_position, m_velocity, m_angle);
-				m_magazine.push_back(nBullet);
-				m_usedBullets++;
-			}
-		}
-
-		void Ship::translate(Engine::Math::Vector2D pos) 
-		{
-			// Change ship position
-			m_position = pos;
-		};
-
-		void Ship::rotate(float num) 
-		{
-			// Changing angle
-			m_angle += num;
-			m_angleInRads = (m_angle + Asteroids::angle_offset) * (Engine::Math::PI / 180);
-		};
-
-		void Ship::Update(float deltaTime) 
-		{
-			// Speed limit - not working -
-			float speed = std::fabs(m_velocity.Length());
-			if (speed > Physics::MAX_PLAYER_SPEED)
-			{
-				m_velocity = Engine::Math::Vector2D(
-				(m_velocity.m_x / speed) * Physics::MAX_PLAYER_SPEED,
-				(m_velocity.m_y / speed) * Physics::MAX_PLAYER_SPEED
-				 );
-
-				m_currentSpeed = std::fabs(m_velocity.m_length);
-			}
-			
-			// Applying drag
-			m_velocity = Engine::Math::Vector2D(
-				m_velocity.m_x * Physics::DRAG, 
-				m_velocity.m_y * Physics::DRAG);
-
-			// Calculating new position
-			Engine::Math::Vector2D pos = m_position + m_velocity;
-
-			// Translation to new position
-			translate(pos);
-
-			//Update existing bullets
-			for (int i = 0; i < m_magazine.size(); i++)
-			{
-				m_magazine[i]->Update(deltaTime);
-				if (m_magazine[i]->m_lifeTime >= 240)
-				{
-					deleteBullet(m_magazine[i]);
-					break;
-				}
-			}
-			return;
-		}
-
-		void Ship::Respawn() 
-		{
-			setCollision(false);
-			m_position = Engine::Math::Vector2D(0.f);
-			ResetOrientation();
-			m_currentColor = Engine::Math::Vector3D(1.f, 0.f, 0.f);
-			setVelocity(Engine::Math::Vector2D(0.f, 0.f));
-		};
-
-		void Ship::wrapAround() 
-		{
-			if (m_position.m_x > 650)
-			{
-				Engine::Math::Vector2D invertedPos(m_position.m_x * -1, m_position.m_y * -1);
-				translate(invertedPos);
-			}
-			else if (m_position.m_x < -650)
-			{
-				Engine::Math::Vector2D invertedPos(m_position.m_x * -1, m_position.m_y * -1);
-				translate(invertedPos);
-			}
-
-			if (m_position.m_y > 400)
-			{
-				Engine::Math::Vector2D invertedPos(m_position.m_x * -1, m_position.m_y * -1);
-				translate(invertedPos);
-			}
-			else if (m_position.m_y < -400)
-			{
-				Engine::Math::Vector2D invertedPos(m_position.m_x * -1, m_position.m_y * -1);
-				translate(invertedPos);
-			}
-		};
-
-		void Ship::deleteBullet(Bullet* dBullet) 
-		{
-			m_magazine.erase(
-				remove(m_magazine.begin(), m_magazine.end(), dBullet), m_magazine.end()
-			);
-			delete dBullet;
-			m_usedBullets--;
-		}
-
-		void Ship::Mass() 
-		{
-			for(auto count : m_points) 
-			{
-				m_mass += 0.2f;
-			}
-
-			if (m_mass < 1.0f)
-				m_mass = 1.5f;
-
-			return;
-		};
-
-		void Ship::ResetOrientation() 
-		{
-			m_angle = 0.f;
-			m_angleInRads = 0.f;
-		};
-
-		void Ship::Lifes(int lifes, int index)
-		{
-			int sum;
-			if (index != 2)
-			{
-				sum = 380;
-				
-				for (int i = 0; i < lifes; i++)
-				{
-					//Reset matrix
-					glLoadIdentity();
-
-					//Drawing the ship
-					glBegin(GL_LINE_LOOP);
-					for (auto temp : m_points)
-					{
-						glVertex2f(temp.m_x + sum, temp.m_y + 275);
-					}
-					glEnd();
-					sum += 70;
-				}
-			}
-			else
-			{
-				sum = 400;
-
-				for (int i = 0; i < lifes; i++)
-				{
-					//Reset matrix
-					glLoadIdentity();
-
-					//Drawing the ship
-					glBegin(GL_LINE_LOOP);
-
-					for (auto temp : m_points)
-					{
-						glVertex2f(temp.m_x + sum, temp.m_y + 295);
-					}
-					glEnd();
-					sum += 50;
-				}
-			}
+			glEnd();
+			Suma += 50;
 		}
 	}
 }
