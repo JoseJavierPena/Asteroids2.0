@@ -6,3 +6,4 @@ TODO:
 
 There's some comments on the program in App.cpp that needs attention, need to overload the operator = to pass the models to the var.
 Need to change when the ship is colliding with an asteroid in order to erase a life of the ship.
+Prove that the enemy ship is well drawn.
