@@ -13,6 +13,7 @@
 
 //
 #include "Game.h"
+#include "enemyShip.h"
 
 namespace Engine
 {
@@ -66,7 +67,7 @@ namespace Engine
 		//void CheckAst();
 
 		/* =============================================================
-		 * MEMBERS
+		 * PRIVATE MEMBERS
 		 * ============================================================= */
 		int															m_width;
 		int															m_height;
@@ -77,10 +78,14 @@ namespace Engine
 		SDL_GLContext												m_context;
 		GameState::State											m_state;
 		Engine::TimeManager*										m_timer;
-		Game::AsteroidsGame*										m_game;
-		//
+		Game::Game*													m_game;
+		
+		//Lifes
 		std::vector<Asteroids::Entity::Ship*> lifesShip;
 		int lifes;
+
+		//Enemy ship
+		//Asteroids::Entity::EnemyShip enemy;
 	};
 }
 #endif /* GAME_HPP */

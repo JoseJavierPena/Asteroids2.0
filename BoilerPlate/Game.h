@@ -5,25 +5,28 @@
 // STD
 #include <vector>
 
-//
+//Vector includes
 #include "Vector2D.h"
+
+//Asteroids Game includes
 #include "Ship.h"
 #include "Asteroid.h"
 #include "Utils.h"
+#include "enemyShip.h"
 
 namespace Game 
 {
 	const Engine::Math::Vector2D null(0.f, 0.f);
 
-	class AsteroidsGame
+	class Game
 	{
 	public:
 
 		/*======================================*/
 		/*			PUBLIC FUNCTIONS			*/
 		/*======================================*/
-		AsteroidsGame(int WIDTH, int HEIGHT);
-		~AsteroidsGame();
+		Game(int WIDTH, int HEIGHT);
+		~Game();
 		void Init();
 		void Update(float fps);
 		void Render();
@@ -41,7 +44,15 @@ namespace Game
 		/*======================================*/
 		int								m_WIDTH;
 		int								m_HEIGHT;
+		
+		//Seconds to respawn
+		double secondsTo = 0;
+
+		//Lifes
 		int lifes;
+
+		//Enemy
+		std::vector<Asteroids::Entity::EnemyShip*> m_enemy;
 
 		/*======================================*/
 		/*			PRIVATE FUNCTIONS			*/

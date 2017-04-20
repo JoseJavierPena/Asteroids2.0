@@ -9,6 +9,9 @@
 #include <string>
 #include <fstream>
 
+//Game includes
+#include "Game.h"
+
 namespace Engine
 {
 	namespace FileSystem

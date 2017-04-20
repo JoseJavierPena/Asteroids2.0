@@ -60,5 +60,49 @@ namespace Asteroids
 			std::cout << std::endl;
 			return ships;
 		}
+
+		//Enemy model
+		std::string const enemyShip_dir = "enemyShip";
+
+		//Load enemy ship model
+		std::vector<Asteroids::Entity::EnemyShip*> Load::LoadEnemy()
+		{
+			Engine::FileSystem::Utilities util;
+
+			//Retrieve the files from the directory
+			auto models = util.ListFile(enemyShip_dir);
+
+			std::vector<Asteroids::Entity::EnemyShip*> FlyingSaucer;
+
+			for (auto temp : models)
+			{
+				//Load file
+				std::ifstream ifstream(util.buildPath(enemyShip_dir, temp));
+
+				//
+				std::string content;
+
+				std::vector<Engine::Math::Vector2D> points;
+				while (ifstream >> content)
+				{
+					//Read components
+					std::stringstream lineStream(content);
+					std::string cell;
+					std::vector<float> components;
+
+					while (std::getline(lineStream, cell, ','))
+					{
+						components.push_back(std::stof(cell));
+					}
+					//Adding points to vector
+					points.push_back(Engine::Math::Vector2D(components[0], components[1]));
+				}
+				//Adding enemy ship to array
+				FlyingSaucer.push_back(new Asteroids::Entity::EnemyShip(points));
+				//FlyingSaucer[FlyingSaucer.size() - 1]->RandomTranslation();
+			}
+			std::cout << std::endl;
+			return FlyingSaucer;
+		}
 	}
 }

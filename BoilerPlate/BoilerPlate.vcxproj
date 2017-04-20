@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BoilerPlate</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>BoilerPlate</ProjectName>
+    <ProjectName>Asteroids</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -177,6 +177,7 @@ copy /Y "$(SolutionDir)\Externals\SDL2-2.0.4\lib\x64\SDL2.dll" "$(TargetDir)SDL2
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Asteroid.cpp" />
+    <ClCompile Include="enemyShip.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Entities.cpp" />
@@ -193,6 +194,7 @@ copy /Y "$(SolutionDir)\Externals\SDL2-2.0.4\lib\x64\SDL2.dll" "$(TargetDir)SDL2
   <ItemGroup>
     <ClInclude Include="App.hpp" />
     <ClInclude Include="Asteroid.h" />
+    <ClInclude Include="enemyShip.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Entities.h" />

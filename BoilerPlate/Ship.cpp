@@ -65,7 +65,7 @@ namespace Asteroids
 			glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
 
 			//Color changing
-			glColor3f(m_currentColor.m_x, m_currentColor.m_y, m_currentColor.m_z);
+			glColor3f(0.0f, 1.0f, 0.0f);
 
 			// Ship drawing
 			glBegin(GL_LINE_LOOP);

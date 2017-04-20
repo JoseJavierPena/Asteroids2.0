@@ -4,13 +4,13 @@
 
 namespace Game 
 {
-	AsteroidsGame::AsteroidsGame(int WIDTH, int HEIGHT)
+	Game::Game(int WIDTH, int HEIGHT)
 		: m_WIDTH(WIDTH)
 		, m_HEIGHT(HEIGHT)
 		, m_playerIndex(0)
 	{}
 
-	AsteroidsGame::~AsteroidsGame() 
+	Game::~Game() 
 	{
 		for (int i = 0; i < m_player.size() - 1; i++)
 			delete m_player.at(i);
@@ -19,7 +19,7 @@ namespace Game
 			delete m_enemies.at(i);
 	}
 
-	void AsteroidsGame::Init()
+	void Game::Init()
 	{
 		//Loading Ships or PLayer Models
 		Asteroids::Utilities::Load config;
@@ -28,10 +28,13 @@ namespace Game
 		//Creating the asteroids
 		createEnemy(7, Asteroids::Entity::Asteroid::AsteroidSize::BIG, null);
 
+		//Creating enemy ship
+		//m_enemy = config.LoadModels();
+
 		return;
 	}
 
-	void AsteroidsGame::Update(float fps)
+	void Game::Update(float fps)
 	{
 		//Update player
 		m_player[m_playerIndex]->Update(fps);
@@ -43,10 +46,13 @@ namespace Game
 		//Check collitions
 		checkCollitions(lifes);
 
+		//Check enemy Ship
+		//m_enemy.Update(fps);
+
 		return;
 	}
 
-	void AsteroidsGame::Render()
+	void Game::Render()
 	{
 		// Render player
 		m_player[m_playerIndex]->Render();
@@ -54,11 +60,17 @@ namespace Game
 		// Render enemies
 		for (int i = 0; i < m_enemies.size(); i++)
 			m_enemies[i]->Render();
+
+		//Rendering enemy ship
+		/*if (secondsTo > 5)
+		{
+			for(int i=0;i<m_enemy)
+		}*/
 		
 		return;
 	}
 
-	void AsteroidsGame::checkCollitions(int life)
+	void Game::checkCollitions(int life)
 	{
 		if (!m_player[m_playerIndex]->canCollide()) return;
 
@@ -118,7 +130,7 @@ namespace Game
 		return;
 	}
 
-	void AsteroidsGame::createEnemy(int cant, Asteroids::Entity::Asteroid::AsteroidSize size, Engine::Math::Vector2D pos)
+	void Game::createEnemy(int cant, Asteroids::Entity::Asteroid::AsteroidSize size, Engine::Math::Vector2D pos)
 	{
 		if (pos == null)
 		{
@@ -141,7 +153,7 @@ namespace Game
 
 	}
 
-	void AsteroidsGame::deleteEnemy(Asteroids::Entity::Asteroid* dEnemy) 
+	void Game::deleteEnemy(Asteroids::Entity::Asteroid* dEnemy) 
 	{
 		m_enemies.erase(
 			remove(m_enemies.begin(), m_enemies.end(), dEnemy), m_enemies.end()
@@ -149,7 +161,7 @@ namespace Game
 		delete dEnemy;
 	}
 
-	void AsteroidsGame::createDebris(Asteroids::Entity::Asteroid::AsteroidSize size, Engine::Math::Vector2D pos)
+	void Game::createDebris(Asteroids::Entity::Asteroid::AsteroidSize size, Engine::Math::Vector2D pos)
 	{
 		if (size == Asteroids::Entity::Asteroid::AsteroidSize::BIG)
 		{

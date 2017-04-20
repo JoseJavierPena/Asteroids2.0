@@ -6,7 +6,7 @@
 #include <GL/glew.h>
 #include <SDL2/SDL_opengl.h>
 
-//
+//Load
 #include "Utils.h"
 
 namespace Engine
@@ -24,7 +24,7 @@ namespace Engine
 		, m_mainWindow(nullptr)
 		, lifes(3)
 	{
-		m_game = new Game::AsteroidsGame(width, height);
+		m_game = new Game::Game(width, height);
 		m_state = GameState::UNINITIALIZED;
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
 	}

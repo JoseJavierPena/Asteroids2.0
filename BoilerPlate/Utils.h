@@ -8,6 +8,11 @@
 
 //Game includes
 #include "Ship.h"
+#include "Game.h"
+#include "enemyShip.h"
+#include "Bullet.h"
+#include "Asteroid.h"
+
 
 namespace Asteroids 
 {
@@ -21,6 +26,8 @@ namespace Asteroids
 				/*			PUBLIC FUNCTIONS			*/
 				/*======================================*/
 				std::vector<Entity::Ship*> LoadModels();
+				std::vector<Asteroids::Entity::EnemyShip*> LoadEnemy();
+
 		};
 	}
 }
