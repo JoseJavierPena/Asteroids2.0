@@ -14,7 +14,7 @@
 #include "Bala.hpp"
 #include "MathUtils.hpp"
 
-class ship : public draw, public Vector2
+class ship : public draw
 {
 public:
 		ship();

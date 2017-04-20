@@ -32,17 +32,14 @@
     <ClCompile Include="Vector3D.cpp">
       <Filter>Engine\Source files</Filter>
     </ClCompile>
-    <ClCompile Include="RigidBodyComponent.cpp">
-      <Filter>Engine\Source files</Filter>
+    <ClCompile Include="stb_image.c">
+      <Filter>Internal</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
       <Filter>Internal\Source files</Filter>
     </ClCompile>
     <ClCompile Include="SDLEvent.cpp">
       <Filter>Internal\Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="stb_image.c">
-      <Filter>Internal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,16 +76,13 @@
     <ClInclude Include="ship.hpp">
       <Filter>Game\Header files</Filter>
     </ClInclude>
-    <ClInclude Include="RigidBodyComponent.hpp">
-      <Filter>Engine\Header files</Filter>
-    </ClInclude>
     <ClInclude Include="dirent.h">
       <Filter>Internal\Header files</Filter>
     </ClInclude>
-    <ClInclude Include="TimeManager.hpp">
+    <ClInclude Include="SDLEvent.hpp">
       <Filter>Internal\Header files</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEvent.hpp">
+    <ClInclude Include="TimeManager.hpp">
       <Filter>Internal\Header files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -112,13 +106,13 @@
       <UniqueIdentifier>{20f695a9-d112-4cf5-be2c-d75bf9d1a1ce}</UniqueIdentifier>
     </Filter>
     <Filter Include="Internal">
-      <UniqueIdentifier>{006ef6cb-5a1b-4040-9fa9-1fec624a844a}</UniqueIdentifier>
+      <UniqueIdentifier>{bae1a7d2-8e8b-4d0c-9904-9ce243e52b0c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Internal\Header files">
-      <UniqueIdentifier>{7f9f4598-52ab-487c-8388-1665488d29a3}</UniqueIdentifier>
+      <UniqueIdentifier>{cf9cc55e-6b16-40a1-95f4-759e84e71673}</UniqueIdentifier>
     </Filter>
     <Filter Include="Internal\Source files">
-      <UniqueIdentifier>{1da210b3-ab45-4253-bbb2-0c93e7b1a121}</UniqueIdentifier>
+      <UniqueIdentifier>{a9fc9fd4-2250-47f7-af5e-cb4e80ef6c5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

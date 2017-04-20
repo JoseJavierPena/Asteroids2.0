@@ -332,8 +332,8 @@ namespace Engine
 		if (CantVidas == 0)
 		{
 			std::cout << "GAME OVER!!" << std::endl;
-			std::cout << "Score: " << Score << std::endl;
-			std::system("PAUSE");
+			std::cout << "Su Score fue de: " << Score << std::endl;
+			std::system("Pause");
 			exit(EXIT_FAILURE);
 		}
 	}

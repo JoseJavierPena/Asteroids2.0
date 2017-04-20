@@ -8,7 +8,7 @@
 #include <algorithm>
 
 const float AnguloAjuste = 90.0f;
-float Fuerza = 3.0f;
+const float Fuerza = 3.0f;
 const float Drag = 0.999f;
 const float Max_Speed = 10.0f;
 
@@ -64,8 +64,6 @@ void ship::Draw()
 
 	for (int i = 0; i < Balas.size(); i++)
 		Balas[i]->Render();
-	
-	DrawT(GL_LINE_LOOP, Point);
 }
 
 void ship::Trasladar(Vector2 position)
@@ -74,18 +72,16 @@ void ship::Trasladar(Vector2 position)
 	setPosAl(Position);
 }
 
-void ship::MoveUp() 
+void ship::MoveUp()
 {
 	if (Masa > 0)
 	{
 		Vector2 velocity = Vector2((Fuerza / Masa) * cosf(AnguloRadianes), (Fuerza / Masa) * sinf(AnguloRadianes));
-		/*float x = (Fuerza.X / Masa) * cosf(AnguloRadianes);
-		float y = (Fuerza.Y / Masa) * sinf(AnguloRadianes);*/
 		Velocity += velocity;
 	}
 }
 
-void ship::MoveDown() 
+void ship::MoveDown()
 {
 	if (Masa > 0)
 	{
@@ -209,7 +205,6 @@ void ship::Update(float deltatime)
 void ship::Disparar()
 {
 	if (UsoBala == 100) return;
-
 	else if (UsoBala < 100)
 	{
 		Bala* nBullet = new Bala(Position, Velocity, Angulo);

@@ -178,7 +178,6 @@ copy /Y "$(SolutionDir)\Externals\SDL2-2.0.4\lib\x64\SDL2.dll" "$(TargetDir)SDL2
     <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="Load.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="SDLEvent.cpp" />
     <ClCompile Include="ship.cpp" />
     <ClCompile Include="stb_image.c" />
@@ -196,7 +195,6 @@ copy /Y "$(SolutionDir)\Externals\SDL2-2.0.4\lib\x64\SDL2.dll" "$(TargetDir)SDL2
     <ClInclude Include="EnemyShip.hpp" />
     <ClInclude Include="Load.hpp" />
     <ClInclude Include="MathUtils.hpp" />
-    <ClInclude Include="RigidBodyComponent.hpp" />
     <ClInclude Include="SDLEvent.hpp" />
     <ClInclude Include="ship.hpp" />
     <ClInclude Include="TimeManager.hpp" />
