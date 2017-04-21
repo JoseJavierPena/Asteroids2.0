@@ -1,9 +1,14 @@
 TODO:
 
-- Add lifes to the game.
-- Score.
-- Add enemy ship.
+- Add lifes to the game.  DONE 
+- Score.                  DONE
+- Add enemy ship.         DONE
 
 There's some comments on the program in App.cpp that needs attention, need to overload the operator = to pass the models to the var.
 Need to change when the ship is colliding with an asteroid in order to erase a life of the ship.
+Need to change when adding more asteroids, and the position of the ship and the asteroids after creating lots of asteroids.
+Draw better enemy ship.
 Prove that the enemy ship is well drawn.
+Need some refactor to make a better game.
+Create gameObject
+Load image after GAME OVER...!
